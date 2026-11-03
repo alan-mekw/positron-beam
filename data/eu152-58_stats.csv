@@ -1,0 +1,22 @@
+quantity,value,unit
+file,eu152-58.Spc,
+spectrum_name,eu-152 58.Spc,
+start_date_raw,30-Oct-261,
+start_time_raw,16:19:03,
+start_datetime,2026-10-30T16:19:03,
+real_time,442.0,s
+live_time,309.0,s
+dead_time,133.0,s
+dead_time_fraction,30.09049773755656,%
+n_channels,8192,
+total_counts,8521795,counts
+count_rate_live,27578.624595469257,counts/s
+count_rate_real,19280.07918552036,counts/s
+max_count,61191,counts
+max_count_channel,413,channel
+max_count_energy,121.85228012158143,keV
+energy_min,33.0075554293888,keV
+energy_max,1794.6473230041938,keV
+cal_c0,32.899993896484375,keV
+cal_c1,0.21512307226657867,keV/ch
+cal_c2,-6.4577201364102166e-09,keV/ch^2
