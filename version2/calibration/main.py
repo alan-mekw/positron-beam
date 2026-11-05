@@ -1,5 +1,5 @@
 import numpy as np
-
+import json
 from src.getData import CALIBRATION_DIR, load_calibration_data
 from src.calibration import collect_points, fit_calibration
 from src.plotting import plot_calibration, plot_spectra
@@ -102,6 +102,8 @@ def main():
     e1, e0 = cal["errs"][0], cal["errs"][-1]
     print(f"  a1 = {a1:.6f} +/- {e1:.6f} keV/channel")
     print(f"  a0 = {a0:.4f} +/- {e0:.4f} keV")
+    json.dump({"coefficients_low_to_high": [float(a0), float(a1)]}, open("calibration.json", "w"))
+    
     if "raw" in best:  # per-source offsets: also report each source's own intercept
         raw = best["raw"]
         print("  Per-source offsets (relative to "
