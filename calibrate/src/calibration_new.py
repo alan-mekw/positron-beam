@@ -118,3 +118,38 @@ def channel_to_energy(channel, cal, channel_err=0.0):
     var = np.einsum("ij,jk,ik->i", J, cal["cov"], J)
     var = var + (np.polyval(np.polyder(cal["coeffs"]), ch) * channel_err) ** 2
     return energy, np.sqrt(var)
+
+
+
+if __name__ == "__main__":
+    import glob
+    import json
+    import os
+
+    # Find all JSON source files
+    json_files = glob.glob("*.json")
+
+    sources = []
+    for filename in json_files:
+        with open(filename, "r") as f:
+            source = json.load(f)
+            source["name"] = os.path.splitext(os.path.basename(filename))[0]
+            sources.append(source)
+
+    print(f"Found {len(sources)} source files.")
+
+    # Collect calibration points and export CSV
+    channels, channel_errs, energies, energy_errs, labels, fits = collect_points(sources)
+
+    print(f"Collected {len(channels)} calibration points.")
+    print("CSV saved to:", os.path.abspath("calibration_points.csv"))
+
+    # Perform linear calibration
+    cal = fit_calibration(channels, channel_errs, energies, energy_errs, order=1)
+
+    print("\nCalibration coefficients:", cal["coeffs"])
+    print("Chi-squared:", cal["chi2"])
+    print("Degrees of freedom:", cal["ndf"])
+    print("Reduced chi-squared:", cal["red_chi2"])
+    print("P-value:", cal["p_value"])
+
