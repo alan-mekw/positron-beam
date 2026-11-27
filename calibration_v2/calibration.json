@@ -1,0 +1,273 @@
+{
+  "model": "E_keV = sum_k coefficients[k] * channel^k",
+  "order": 1,
+  "coefficients": [
+    30.204670591363115,
+    0.21298421430764944
+  ],
+  "coefficient_errors": [
+    0.20211753374495509,
+    3.327909669173592e-05
+  ],
+  "chi2": 0.34751034904670447,
+  "ndf": 6,
+  "chi2_per_ndf": 0.05791839150778408,
+  "error_scale_applied": 1.0,
+  "n_channels": 8192,
+  "peaks": [
+    {
+      "source": "Ba133",
+      "energy_keV": 276.4,
+      "energy_err_keV": 0.001,
+      "centroid_ch": 1155.7802830520363,
+      "centroid_err_ch": 0.8114196377613307,
+      "fwhm_ch": 5.471092289889875,
+      "fit_chi2red": 99.92081862471854,
+      "used": true,
+      "residual_keV": 0.03237391052618932,
+      "influence": {
+        "norm_residual": 0.1873246635854993,
+        "delta_chi2": 0.3475103490465874,
+        "chi2_per_ndf_without": 2.341198353288251e-14,
+        "delta_coefficients": [
+          0.3554317857626117,
+          -5.81414224985477e-05
+        ],
+        "max_shift_keV": 0.288233076010215
+      }
+    },
+    {
+      "source": "Ba133",
+      "energy_keV": 302.851,
+      "energy_err_keV": 0.001,
+      "centroid_ch": 1280.17624824191,
+      "centroid_err_ch": 0.9240382309040185,
+      "fwhm_ch": 4.814204414302099,
+      "fit_chi2red": 473.1804148432048,
+      "used": false,
+      "reject_reason": "fit chi2/ndf 473.18 > 400.0",
+      "residual_keV": -0.011002998480705628
+    },
+    {
+      "source": "Ba133",
+      "energy_keV": 356.013,
+      "energy_err_keV": 0.001,
+      "centroid_ch": 1530.1909282700394,
+      "centroid_err_ch": 1.2799471928181994,
+      "fwhm_ch": 4.719564818270346,
+      "fit_chi2red": 2594.5992945551016,
+      "used": false,
+      "reject_reason": "fit chi2/ndf 2594.60 > 400.0",
+      "residual_keV": -0.09818318965028539
+    },
+    {
+      "source": "Ba133",
+      "energy_keV": 383.848,
+      "energy_err_keV": 0.001,
+      "centroid_ch": 1661.0956838959187,
+      "centroid_err_ch": 1.5053544906674583,
+      "fwhm_ch": 4.532394961278042,
+      "fit_chi2red": 402.7796075874798,
+      "used": false,
+      "reject_reason": "fit chi2/ndf 402.78 > 400.0",
+      "residual_keV": -0.14382971576299042
+    },
+    {
+      "source": "Co60",
+      "energy_keV": 1173.237,
+      "energy_err_keV": 0.004,
+      "centroid_ch": 5365.794055384913,
+      "centroid_err_ch": 0.0999920050127496,
+      "fwhm_ch": 12.83538389274094,
+      "fit_chi2red": 409.77342030107144,
+      "used": false,
+      "reject_reason": "fit chi2/ndf 409.77 > 400.0",
+      "residual_keV": 0.20289838582539232
+    },
+    {
+      "source": "Co60",
+      "energy_keV": 1332.501,
+      "energy_err_keV": 0.005,
+      "centroid_ch": 6114.520076206889,
+      "centroid_err_ch": 0.08679643536008648,
+      "fwhm_ch": 13.005798717483126,
+      "fit_chi2red": 220.73213087089277,
+      "used": true,
+      "residual_keV": 7.510936393373413e-05,
+      "influence": {
+        "norm_residual": 0.00392205465162373,
+        "delta_chi2": 0.34751034904670447,
+        "chi2_per_ndf_without": 4.8783285089941515e-21,
+        "delta_coefficients": [
+          -0.4353948291982306,
+          0.0003487002889577817
+        ],
+        "max_shift_keV": 1.8233430942614177
+      }
+    },
+    {
+      "source": "Cs137",
+      "energy_keV": 661.657,
+      "energy_err_keV": 0.003,
+      "centroid_ch": 2967.5989803094217,
+      "centroid_err_ch": 0.6922766588077285,
+      "fwhm_ch": 10.579453941909224,
+      "fit_chi2red": 7097.590374666417,
+      "used": false,
+      "reject_reason": "fit chi2/ndf 7097.59 > 400.0",
+      "residual_keV": -0.5994077927468879
+    },
+    {
+      "source": "Eu152",
+      "energy_keV": 344.279,
+      "energy_err_keV": 0.001,
+      "centroid_ch": 1475.007296061882,
+      "centroid_err_ch": 0.6262007316597051,
+      "fwhm_ch": 6.710503159878227,
+      "fit_chi2red": 3012.797979693794,
+      "used": false,
+      "reject_reason": "fit chi2/ndf 3012.80 > 400.0",
+      "residual_keV": -0.07894064115356514
+    },
+    {
+      "source": "Eu152",
+      "energy_keV": 443.965,
+      "energy_err_keV": 0.003,
+      "centroid_ch": 1943.8189170182816,
+      "centroid_err_ch": 2.036309481375944,
+      "fwhm_ch": 5.101065246565774,
+      "fit_chi2red": 373.3677805148409,
+      "used": true,
+      "residual_keV": -0.2424153888479168,
+      "influence": {
+        "norm_residual": -0.5589315136458718,
+        "delta_chi2": 0.34751034904657485,
+        "chi2_per_ndf_without": 2.5925273973659046e-14,
+        "delta_coefficients": [
+          -0.0399020969411481,
+          6.513509986288968e-06
+        ],
+        "max_shift_keV": 0.0323739105255072
+      }
+    },
+    {
+      "source": "Eu152",
+      "energy_keV": 778.904,
+      "energy_err_keV": 0.002,
+      "centroid_ch": 3518.99791790234,
+      "centroid_err_ch": 510677225.5745083,
+      "fwhm_ch": 1.1774000033815195,
+      "fit_chi2red": 690.3403781721088,
+      "used": false,
+      "reject_reason": "fit chi2/ndf 690.34 > 400.0",
+      "residual_keV": -0.791677286047161
+    },
+    {
+      "source": "Eu152",
+      "energy_keV": 867.373,
+      "energy_err_keV": 0.003,
+      "centroid_ch": 3935.0572048572335,
+      "centroid_err_ch": 2536855386.9493017,
+      "fwhm_ch": 1.1774000000000002,
+      "fit_chi2red": 100.35458743114992,
+      "used": true,
+      "residual_keV": -0.9367376235360325,
+      "influence": {
+        "norm_residual": -1.7337035425046272e-09,
+        "delta_chi2": 1.0513812043200232e-13,
+        "chi2_per_ndf_without": 0.06950206980931986,
+        "delta_coefficients": [
+          6.394884621840902e-13,
+          -1.6653345369377348e-16
+        ],
+        "max_shift_keV": 5.115907697472721e-13
+      }
+    },
+    {
+      "source": "Eu152",
+      "energy_keV": 964.079,
+      "energy_err_keV": 0.018,
+      "centroid_ch": 4389.854220388484,
+      "centroid_err_ch": 1321813416.2260551,
+      "fwhm_ch": 1.1774000746798885,
+      "fit_chi2red": 244.60700813462006,
+      "used": true,
+      "residual_keV": -1.095322645923261,
+      "influence": {
+        "norm_residual": -3.890670885733954e-09,
+        "delta_chi2": 1.0080825063596421e-13,
+        "chi2_per_ndf_without": 0.06950206980932074,
+        "delta_coefficients": [
+          2.6894042548519792e-12,
+          -4.718447854656915e-16
+        ],
+        "max_shift_keV": 2.1600499167107046e-12
+      }
+    },
+    {
+      "source": "Eu152",
+      "energy_keV": 1085.869,
+      "energy_err_keV": 0.024,
+      "centroid_ch": 4962.461148161591,
+      "centroid_err_ch": 1008515821.8233573,
+      "fwhm_ch": 1.1774049928795203,
+      "fit_chi2red": 65.25314089597168,
+      "used": true,
+      "residual_keV": -1.261559264795551,
+      "influence": {
+        "norm_residual": -5.873236989548205e-09,
+        "delta_chi2": 7.69939667577546e-14,
+        "chi2_per_ndf_without": 0.0695020698093255,
+        "delta_coefficients": [
+          2.604139126560767e-12,
+          -4.440892098500626e-16
+        ],
+        "max_shift_keV": 2.1032064978498966e-12
+      }
+    },
+    {
+      "source": "Eu152",
+      "energy_keV": 1112.069,
+      "energy_err_keV": 0.003,
+      "centroid_ch": 5085.833913056314,
+      "centroid_err_ch": 17548034.738351315,
+      "fwhm_ch": 16.28089952384281,
+      "fit_chi2red": 64.35422606900589,
+      "used": true,
+      "residual_keV": -1.3380106628603698,
+      "influence": {
+        "norm_residual": -3.580005326465968e-07,
+        "delta_chi2": 2.3742119381608973e-13,
+        "chi2_per_ndf_without": 0.06950206980929341,
+        "delta_coefficients": [
+          1.943334382303874e-12,
+          -3.608224830031759e-16
+        ],
+        "max_shift_keV": 1.5916157281026244e-12
+      }
+    },
+    {
+      "source": "Eu152",
+      "energy_keV": 1408.006,
+      "energy_err_keV": 0.003,
+      "centroid_ch": 6477.591200772226,
+      "centroid_err_ch": 858000202.9639795,
+      "fwhm_ch": 1.1814639947503882,
+      "fit_chi2red": 19.566349159428025,
+      "used": true,
+      "residual_keV": -1.8233430939790196,
+      "influence": {
+        "norm_residual": -9.977772321506408e-09,
+        "delta_chi2": -7.666089985036706e-14,
+        "chi2_per_ndf_without": 0.06950206980935622,
+        "delta_coefficients": [
+          6.071587677070056e-12,
+          -1.0269562977782698e-15
+        ],
+        "max_shift_keV": 4.945377440890297e-12
+      }
+    }
+  ],
+  "offset_keV": 30.204670591363115,
+  "keV_per_channel": 0.21298421430764944
+}

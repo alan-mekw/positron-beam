@@ -113,10 +113,23 @@ def main():
     for l, e, ch, r, p in zip(labels, energies, channels, off["residuals"], pulls):
         print(f"  {l:6s} {e:9.2f} keV  ch {ch:8.2f}  resid {r:+.3f} keV  pull {p:+.1f}")
 
+    suspects = np.flatnonzero(np.abs(pulls) > 2)
+    if len(suspects):
+        print("\nPoints with |pull| > 2, worst first. One bad point can inflate the others, so paste\n"
+              "only the first line into excluded_points.csv, then rerun:")
+        for i in suspects[np.argsort(-np.abs(pulls[suspects]))]:
+            print(f"{labels[i]},{energies[i]:.3f},pull {pulls[i]:+.1f}")
+    else:
+        print("\nNo points with |pull| > 2.")
+
     print("\nChi2 after dropping the largest-pull point, one at a time (per-source offsets):")
     keep = np.ones(len(channels), bool)
     for _ in range(2):
         idx = np.flatnonzero(keep)
+        # stop if dropping another point would leave no degrees of freedom
+        if len(idx) - 1 <= 1 + len(set(lab[idx])):
+            print("  too few points to drop any more")
+            break
         f = fit_calibration_offsets(channels[idx], channel_errs[idx], energies[idx],
                                     energy_errs[idx], lab[idx])
         worst = idx[np.argmax(np.abs(f["residuals"] / f["sigma_eff"]))]

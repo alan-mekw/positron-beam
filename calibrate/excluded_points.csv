@@ -1,0 +1,8 @@
+source,energy,reason
+# Add one point per line (remove the leading # to activate). Delete a line to restore it.
+# Ba133,80.998,example: low-energy tail
+Co60,1332.501,large pull 
+Eu152,778.904,large pull
+Eu152,867.37,large pull
+Eu152,443.96,large pull 
+Eu152,1085.87,large pull

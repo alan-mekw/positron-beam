@@ -1,24 +1,61 @@
 """Build the channel -> energy calibration from all sources, with a chi-squared fit."""
+from pathlib import Path
+
 import numpy as np
+import pandas as pd
 from scipy.stats import chi2 as chi2_dist
 
 from src.peakFinding import find_all_peaks
 
+# Points to leave out of every calibration fit: columns source,energy,reason
+EXCLUDE_FILE = Path(__file__).resolve().parent.parent / "excluded_points.csv"
+EXCLUDE_TOLERANCE = 0.5     # keV: how closely a listed energy must match a peak
 
-def collect_points(sources):
+
+def load_exclusions(path=EXCLUDE_FILE):
+    """Return a list of (source, energy, reason). Lines starting with # are ignored,
+    and a missing file means nothing is excluded."""
+    if not Path(path).exists():
+        return []
+    df = pd.read_csv(path, comment="#", skipinitialspace=True)
+    return [(str(r.source).strip(), float(r.energy),
+             "" if pd.isna(r.reason) else str(r.reason)) for r in df.itertuples()]
+
+
+def collect_points(sources, exclude=None):
     """Gather fitted (channel, energy) points from every source.
 
     Returns channels, channel_errs, energies, energy_errs, labels and fits
     (a dict of peak fits per source name).
+
+    Points listed in `exclude` (default: the contents of excluded_points.csv) are left
+    out of the returned arrays. Their peak fits stay in `fits`, so they are still plotted.
+    An entry that matches no peak raises an error, so a typo cannot pass unnoticed.
     """
+    exclude = load_exclusions() if exclude is None else exclude
+    unmatched = set(range(len(exclude)))
     all_ch, all_ch_err, all_en, all_en_err, labels, fits = [], [], [], [], [], {}
     for source in sources:
         ch, ch_err, en, en_err, fits[source["name"]] = find_all_peaks(source)
-        all_ch.extend(ch)
-        all_ch_err.extend(ch_err)
-        all_en.extend(en)
-        all_en_err.extend(en_err)
-        labels.extend([source["name"]] * len(ch))
+        keep = np.ones(len(en), bool)
+        for i, (name, energy, reason) in enumerate(exclude):
+            if name != source["name"]:
+                continue
+            match = np.abs(en - energy) <= EXCLUDE_TOLERANCE
+            if match.any():
+                unmatched.discard(i)
+                keep &= ~match
+                for e in en[match]:
+                    print(f"Excluding {name} {e:.3f} keV" + (f" ({reason})" if reason else ""))
+        all_ch.extend(ch[keep])
+        all_ch_err.extend(ch_err[keep])
+        all_en.extend(en[keep])
+        all_en_err.extend(en_err[keep])
+        labels.extend([source["name"]] * int(keep.sum()))
+    if unmatched:
+        raise ValueError("Excluded points matching no peak: "
+                         + ", ".join(f"{exclude[i][0]} {exclude[i][1]} keV"
+                                     for i in sorted(unmatched)))
     return (np.array(all_ch), np.array(all_ch_err),
             np.array(all_en), np.array(all_en_err), labels, fits)
 
