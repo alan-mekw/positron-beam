@@ -1,7 +1,7 @@
-"""Sum run*.Spc files into combined.Spc.  Usage: python sum_spc.py "C:\\GammaData\\overnight" """
+"""Usage: python3 combineAll.py runs/   (writes runs/combined.Spc)"""
+import struct
 import sys
 from pathlib import Path
-import becquerel as bq
 import numpy as np
 
 folder = Path(sys.argv[1])
@@ -9,30 +9,23 @@ files = sorted(folder.glob("run*.[sS]pc"))
 if not files:
     sys.exit("No run*.Spc files found.")
 
-spectra = [bq.Spectrum.from_file(str(f)) for f in files]
-if len({len(s.counts_vals) for s in spectra}) != 1:
-    sys.exit("Files have different channel counts.")
-total = sum(s.counts_vals for s in spectra)
+total, real, live = 0, 0.0, 0.0
+for f in files:
+    data = f.read_bytes()
+    kind = struct.unpack_from("<h", data, 2)[0]            # 1 = integer SPC
+    record, _, channels = struct.unpack_from("<3h", data, 60)
+    if kind != 1:
+        sys.exit(f"{f.name}: not an integer SPC file")
+    start = (record - 1) * 128                             # spectrum position
+    total = total + np.frombuffer(data, "<u4", channels, start).astype(np.uint64)
+    r, l = struct.unpack_from("<2f", data, 90)             # real, live time
+    real, live = real + r, live + l
 
-# Use the first file as a template and overwrite its counts and times
-data = files[0].read_bytes()
-for kind in ("<u4", "<f4"):  # integer or real SPC
-    old = spectra[0].counts_vals.astype(kind).tobytes()
-    if data.count(old) == 1:
-        start = data.index(old)
-        break
-else:
-    sys.exit("Could not locate the counts in the template file.")
-
-head, tail = data[:start], data[start + len(old):]
-live0, real0 = spectra[0].livetime, spectra[0].realtime
-for first, new in ((live0, sum(s.livetime for s in spectra)),
-                   (real0, sum(s.realtime for s in spectra))):
-    old_t, new_t = (np.float32(t).tobytes() for t in (first, new))
-    if live0 == real0 or old_t not in head + tail:
-        sys.exit("Could not safely update live/real time.")
-    head, tail = head.replace(old_t, new_t), tail.replace(old_t, new_t)
-
-out = folder / "combined.Spc"
-out.write_bytes(head + total.astype(kind).tobytes() + tail)
-print(f"Combined {len(files)} files into {out}")
+# The first file is the template for calibration and other header details
+out = bytearray(files[0].read_bytes())
+start = (struct.unpack_from("<h", out, 60)[0] - 1) * 128
+out[start:start + 4 * len(total)] = total.astype("<u4").tobytes()
+struct.pack_into("<2f", out, 90, real, live)
+out[294:314] = f"{real:10.0f}{live:10.0f}".encode()        # text copy of times
+(folder / "combined.Spc").write_bytes(out)
+print(f"{len(files)} files, {total.sum()} counts, real {real:.2f} s, live {live:.2f} s")
